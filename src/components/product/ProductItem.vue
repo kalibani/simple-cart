@@ -2,7 +2,7 @@
   <div class="product-wrapper">
     <router-link :to="{ name: 'ProductDetail', params: {id: product._id} }">
       <div class="image-wrapper">
-        <b-img fluid center :src="product.image" alt="Thumbnail" />
+        <b-img fluid :src="product.image" alt="Thumbnail" />
       </div>
       <div class="product-description">
         <small>{{product.manufacturer.name}}</small>

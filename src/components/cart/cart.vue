@@ -11,10 +11,14 @@
         <small>
           {{product.manufacturer && product.manufacturer.name}}
         </small>
-        <h4>{{product.name}}</h4>
+        <div class="product-detail">
+          <h4>{{product.name}}</h4>
+          <h5>Qty : {{product.count}}</h5>
+        </div>
+        <br>
         <p>{{product.description}}</p>
         <div class="product-price">
-          {{product.price}}
+        <h4>Total : {{priceFormatter(product.price*product.count)}}</h4>
         </div>
         <div class="product-action">
           <b-button variant="danger"> Remove from cart</b-button>
@@ -25,18 +29,26 @@
 </template>
 
 <script>
+import { FORMATTER_CURRENCY_IDR } from '@/utils/textFormat'
 import { mapGetters } from 'vuex'
 export default {
   computed: {
     ...mapGetters('productCollection', ['cart']),
     uniqueCart () {
-      return this.cart
-        .filter((elem, index, self) =>
-          self.findIndex(val => val._id === elem._id) === index)
+      return [...this.cart.reduce((arr, val) => {
+        if (!arr.has(val._id)) {
+          arr.set(val._id, {...val, count: 1})
+        } else {
+          arr.get(val._id).count++
+        }
+        return arr
+      }, new Map()).values()]
     }
   },
-  created () {
-    console.log('cart', this.cart)
+  methods: {
+    priceFormatter (payload) {
+      return FORMATTER_CURRENCY_IDR.format(payload).replace(/^(\D+)/, '$1 ')
+    }
   }
 }
 </script>
@@ -52,6 +64,14 @@ p {
 
 .cart-list {
   margin-top: 30px;
+}
+
+.product-detail h4 {
+  float: left;
+}
+
+.product-detail h5 {
+  float: right;
 }
 
 .product-price {
