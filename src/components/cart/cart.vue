@@ -1,18 +1,23 @@
 <template>
   <b-container>
-    <b-row class="product-detail">
+    <b-row
+      class="cart-list"
+      v-for="product in uniqueCart"
+      :key="product._id">
       <b-col lg="4" md="4" sm="6" xs="12">
         <b-img :src="product.image" fluid alt="Responsive image" />
       </b-col>
       <b-col lg="8" md="8" sm="6" xs="12" class="image-detail">
-        <small>{{product.manufacturer && product.manufacturer.name}}</small>
+        <small>
+          {{product.manufacturer && product.manufacturer.name}}
+        </small>
         <h4>{{product.name}}</h4>
         <p>{{product.description}}</p>
         <div class="product-price">
           {{product.price}}
         </div>
         <div class="product-action">
-          <b-button variant="warning" @click="addToCart(product)"> Add to cart</b-button>
+          <b-button variant="danger"> Remove from cart</b-button>
         </div>
       </b-col>
     </b-row>
@@ -20,18 +25,18 @@
 </template>
 
 <script>
-import { mapGetters, mapActions, mapMutations } from 'vuex'
+import { mapGetters } from 'vuex'
 export default {
-  created () {
-    this.getProductDetail(this.$route.params.id)
-    this.initEvent()
-  },
   computed: {
-    ...mapGetters('productCollection', ['product'])
+    ...mapGetters('productCollection', ['cart']),
+    uniqueCart () {
+      return this.cart
+        .filter((elem, index, self) =>
+          self.findIndex(val => val._id === elem._id) === index)
+    }
   },
-  methods: {
-    ...mapActions('productCollection', ['getProductDetail']),
-    ...mapMutations('productCollection', ['addToCart'])
+  created () {
+    console.log('cart', this.cart)
   }
 }
 </script>
@@ -45,7 +50,7 @@ p {
   margin-top: 20px;
 }
 
-.product-detail {
+.cart-list {
   margin-top: 30px;
 }
 

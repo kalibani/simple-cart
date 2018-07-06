@@ -4,11 +4,13 @@ import { fetchProducts, fetchProductDetail } from '@/API/productAPI'
 const productCollection = {
   namespaced: true,
   state: {
+    cart: [],
     products: [],
     product: {},
     isLoading: false
   },
   getters: {
+    cart: state => state.cart,
     products: state => state.products,
     product: state => state.product,
     isLoading: state => state.isLoading
@@ -22,6 +24,9 @@ const productCollection = {
     },
     setIsLoading (state, payload) {
       state.isLoading = payload
+    },
+    addToCart (state, payload) {
+      state.cart.push(payload)
     }
   },
   actions: {
@@ -37,7 +42,6 @@ const productCollection = {
       }
     },
     async getProductDetail ({ commit }, productId) {
-      console.log('--->', productId)
       try {
         const { data } = await fetchProductDetail(productId)
         commit('setProduct', data)

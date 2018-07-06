@@ -46,6 +46,7 @@ export default {
 
 .products {
   background: #f7f8fb;
+  min-height: 400px;
 }
 
 .wrapper {

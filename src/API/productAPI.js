@@ -1,14 +1,13 @@
 import axios from 'axios'
 
 const baseURL = 'https://scotch-vue-shop-api.herokuapp.com/api/v1'
+const header = { 'Content-type': 'application/json' }
 
 export const fetchProducts = () => {
   const config = {
-    url: baseURL + '/products',
+    url: `${baseURL}/products`,
     method: 'get',
-    headers: {
-      'Content-type': 'application/json'
-    }
+    headers: header
   }
 
   return axios(config)
@@ -16,11 +15,9 @@ export const fetchProducts = () => {
 
 export const fetchProductDetail = productId => {
   const config = {
-    url: baseURL + `/products/${productId}`,
+    url: `${baseURL}/products/${productId}`,
     method: 'get',
-    headers: {
-      'Content-type': 'application/json'
-    }
+    headers: header
   }
 
   return axios(config)

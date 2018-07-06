@@ -11,7 +11,7 @@
           Rp {{product.price}}
         </div>
         <div class="product-action">
-          <b-button variant="warning"> Add to cart</b-button>
+          <b-button variant="warning" @click.stop.prevent="addToCart(product)"> Add to cart</b-button>
         </div>
       </div>
     </router-link>
@@ -19,12 +19,16 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 export default {
   props: {
     product: {
       type: Object,
       required: true
     }
+  },
+  methods: {
+    ...mapMutations('productCollection', ['addToCart'])
   }
 }
 </script>
@@ -37,6 +41,7 @@ a {
   background: #fff;
   width: 100%;
   min-height: 390px;
+  margin-top: 20px;
 }
 
 .product-wrapper:hover {
