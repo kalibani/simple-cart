@@ -1,4 +1,3 @@
-// eslint-disable-next-line
 import { fetchProducts, fetchProductDetail } from '@/API/productAPI'
 
 const productCollection = {

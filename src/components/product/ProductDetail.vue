@@ -1,6 +1,6 @@
 <template>
   <b-container>
-    <b-row class="product-detail">
+    <b-row class="product-detail" v-if="product">
       <b-col lg="4" md="4" sm="6" xs="12">
         <b-img :src="product.image" fluid alt="Responsive image" />
       </b-col>
@@ -24,7 +24,6 @@ import { mapGetters, mapActions, mapMutations } from 'vuex'
 export default {
   created () {
     this.getProductDetail(this.$route.params.id)
-    this.initEvent()
   },
   computed: {
     ...mapGetters('productCollection', ['product'])

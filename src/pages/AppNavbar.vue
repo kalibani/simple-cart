@@ -4,7 +4,7 @@
       <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
         <b-navbar-brand href="#">
           <router-link :to="{ name: 'ProductList' }">
-            <img src="http://az670635.vo.msecnd.net/shop-logos/32753/small/1480322046_MyPhone_multimedia_o_shop_logo.png" alt="Responsive image" width="190" height="65">
+            <i class="fas fa-store-alt"></i>
           </router-link>
         </b-navbar-brand>
 
@@ -16,7 +16,8 @@
         </a>
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
-          <b-nav-item to="/cart"><i class="fa fa-shopping-cart"></i> Cart ({{cartLength}})</b-nav-item>
+          <b-nav-item to="/cart"><i class="fa fa-shopping-cart"></i> Cart ({{cartLength}})
+          </b-nav-item>
         </b-navbar-nav>
       </b-collapse>
     </b-container>
@@ -36,6 +37,9 @@ export default {
 </script>
 
 <style scoped>
+a {
+  color: rgba(0, 0, 0, 0.5);
+}
 @media (min-width: 1025px) and (max-width: 1280px) {
 
   .form-inline .form-control {

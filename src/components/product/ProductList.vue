@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div>
     <app-header></app-header>
     <b-container fluid class="bv-example-row products">
       <b-container class="wrapper">

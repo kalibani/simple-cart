@@ -1,6 +1,6 @@
 <template>
   <div class="product-wrapper">
-    <router-link :to="{ name: 'ProductDetail', params: {id: product._id} }">
+    <router-link :to="{ name: 'ProductDetail', params: {id: product._id} }" @click.native="setProduct(product)">
       <div class="image-wrapper">
         <b-img fluid :src="product.image" alt="Thumbnail" />
       </div>
@@ -28,7 +28,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations('productCollection', ['addToCart'])
+    ...mapMutations('productCollection', ['addToCart', 'setProduct'])
   }
 }
 </script>
