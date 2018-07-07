@@ -27,6 +27,9 @@ const productCollection = {
     },
     addToCart (state, payload) {
       state.cart.push(payload)
+    },
+    removeCart (state, payload) {
+      state.cart = payload
     }
   },
   actions: {
