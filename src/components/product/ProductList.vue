@@ -1,6 +1,5 @@
 <template>
   <div>
-    <app-header></app-header>
     <b-container fluid class="bv-example-row products">
       <b-container class="wrapper">
         <b-row
@@ -19,19 +18,24 @@
 </template>
 
 <script>
+import { FORMATTER_CURRENCY_IDR } from '@/utils/textFormat'
 import { mapGetters, mapActions } from 'vuex'
 import ProductItem from '@/components/product/ProductItem'
-import AppHeader from '@/pages/AppHeader'
 import AppLoader from '@/pages/AppLoader'
 export default {
   created () {
     this.getProducts()
   },
   computed: {
-    ...mapGetters('productCollection', ['products', 'isLoading'])
+    ...mapGetters('productCollection', ['products', 'isLoading']),
+    formattedProducts () {
+      return this.products.map(item => ({
+        ...item,
+        price: FORMATTER_CURRENCY_IDR.format(item.price).replace(/^(\D+)/, '$1 ')
+      }))
+    }
   },
   components: {
-    AppHeader,
     AppLoader,
     ProductItem
   },
@@ -46,7 +50,6 @@ export default {
 
 .products {
   background: #f7f8fb;
-  min-height: 400px;
 }
 
 .wrapper {

@@ -8,7 +8,7 @@
         <small>{{product.manufacturer.name}}</small>
         <h4>{{product.name}}</h4>
         <div class="product-price">
-          Rp {{product.price}}
+          {{product.price | currency}}
         </div>
         <div class="product-action">
           <b-button variant="warning" @click.stop.prevent="addToCart(product)"> Add to cart</b-button>
@@ -39,6 +39,7 @@ a {
 }
 .product-wrapper {
   background: #fff;
+  border-radius: 1px;
   width: 100%;
   min-height: 390px;
   margin-top: 20px;

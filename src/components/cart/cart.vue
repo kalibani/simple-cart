@@ -18,7 +18,7 @@
         <br>
         <p>{{product.description}}</p>
         <div class="product-price">
-        <h4>Total : {{priceFormatter(product.price*product.count)}}</h4>
+        <h4>Total : {{product.price*product.count | currency}}</h4>
         </div>
         <div class="product-action">
           <b-button variant="danger" @click="removeFromCart(product)"> Remove from cart</b-button>
@@ -29,20 +29,19 @@
 </template>
 
 <script>
-import { FORMATTER_CURRENCY_IDR } from '@/utils/textFormat'
 import { mapGetters, mapMutations } from 'vuex'
 export default {
   computed: {
     ...mapGetters('productCollection', ['cart']),
     uniqueCart: {
       get () {
-        return [...this.cart.reduce((arr, val) => {
-          if (!arr.has(val._id)) {
-            arr.set(val._id, {...val, count: 1})
+        return [...this.cart.reduce((cart, product) => {
+          if (!cart.has(product._id)) {
+            cart.set(product._id, {...product, count: 1})
           } else {
-            arr.get(val._id).count++
+            cart.get(product._id).count++
           }
-          return arr
+          return cart
         }, new Map()).values()]
       },
       set (newValue) {
@@ -52,13 +51,9 @@ export default {
   },
   methods: {
     ...mapMutations('productCollection', ['removeCart']),
-    priceFormatter (payload) {
-      return FORMATTER_CURRENCY_IDR.format(payload).replace(/^(\D+)/, '$1 ')
-    },
-
     removeFromCart (product) {
-      const productToremove = [product]
-      this.uniqueCart = this.cart.filter(i => !productToremove.some(j => j._id === i._id))
+      const productToRemove = [product]
+      this.uniqueCart = this.cart.filter(productInCart => !productToRemove.some(removedProduct => removedProduct._id === productInCart._id))
     }
   }
 }

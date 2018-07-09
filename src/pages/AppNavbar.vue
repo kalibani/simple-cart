@@ -4,11 +4,16 @@
       <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
         <b-navbar-brand href="#">
           <router-link :to="{ name: 'ProductList' }">
-            <i class="fas fa-store-alt"></i>
+            <i class="fas fa-home"></i>
           </router-link>
         </b-navbar-brand>
 
       <b-collapse is-nav id="nav_collapse">
+        <b-navbar-brand href="#">
+          <router-link to="/admin">
+            <i class="fas fa-user"></i>
+          </router-link>
+        </b-navbar-brand>
         <a class="navbar-text mx-auto" href="#">
           <b-nav-form>
             <b-form-input size="md" class="mr-sm-2" type="text" placeholder="Search"/>
@@ -39,6 +44,11 @@ export default {
 <style scoped>
 a {
   color: rgba(0, 0, 0, 0.5);
+}
+
+.bg-light {
+  border-bottom: 2px solid #F5F5F5;
+  background-color: #fff !important;
 }
 @media (min-width: 1025px) and (max-width: 1280px) {
 
