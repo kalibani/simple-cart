@@ -1,5 +1,5 @@
 <template>
-  <vue-loading type="spiningDubbles" color="#f2300c" :size="{ width: '50px', height: '50px' }"></vue-loading>
+  <vue-loading type="bars" color="rgb(32, 160, 255)" :size="{ width: '50px', height: '50px' }"></vue-loading>
 </template>
 
 <script>

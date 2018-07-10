@@ -1,6 +1,14 @@
 <template>
   <b-col md="9" lg="9" sm="12" xs="12">
-    <b-table responsive striped hover stacked="md" :items="products" :fields="fields">
+    <b-table
+      responsive
+      striped
+      hover
+      stacked="md"
+      :items="products"
+      :fields="fields"
+      :style="{ filter: filterStyle, zIndex: 0}"
+      class="table">
       <template slot="Edit" slot-scope="row">
         <b-link to="/admin/new">
           <i class="far fa-edit"></i>
@@ -15,11 +23,15 @@
         </b-link>
       </template>
     </b-table>
+    <div class="loader-wrapper" v-if="isLoading">
+      <app-loader></app-loader>
+    </div>
   </b-col>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import AppLoader from '@/pages/AppLoader'
 export default {
   data () {
     return {
@@ -39,11 +51,19 @@ export default {
         Delete: {
           label: ''
         }
-      }
+      },
+      filterStyle: 'none'
     }
   },
+  components: {
+    AppLoader
+  },
   computed: {
-    ...mapGetters('productCollection', ['products'])
+    ...mapGetters('productCollection', [
+      'products',
+      'isLoading',
+      'blurEffect'
+    ])
   },
   methods: {
     ...mapActions('productCollection', [
@@ -51,11 +71,33 @@ export default {
       'deleteProduct'
     ])
   },
+  watch: {
+    blurEffect (value) {
+      if (value) {
+        this.filterStyle = 'opacity(30%)'
+      } else {
+        this.filterStyle = 'none'
+      }
+    }
+  },
   created () {
     this.getProducts()
   }
 }
 </script>
 
-<style lang="css">
+<style scoped>
+.table{
+  white-space:nowrap;
+}
+  .loader-wrapper {
+    position: absolute;
+    display: block;
+    z-index: 10;
+    margin-left: 100px;
+    left: 300px;
+    text-align: center;
+    top: 275px;
+    overflow:hidden;
+  }
 </style>

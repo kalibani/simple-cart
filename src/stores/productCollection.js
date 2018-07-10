@@ -15,14 +15,16 @@ const productCollection = {
     products: [],
     product: {},
     manufacturers: [],
-    isLoading: false
+    isLoading: false,
+    blurEffect: false
   },
   getters: {
     cart: state => state.cart,
     products: state => state.products,
     product: state => state.product,
     manufacturers: state => state.manufacturers,
-    isLoading: state => state.isLoading
+    isLoading: state => state.isLoading,
+    blurEffect: state => state.blurEffect
   },
   mutations: {
     setProducts (state, payload) {
@@ -33,6 +35,9 @@ const productCollection = {
     },
     setIsLoading (state, payload) {
       state.isLoading = payload
+    },
+    setBlurEffect (state, payload) {
+      state.blurEffect = payload
     },
     addProduct (state, payload) {
       state.products.push(payload)
@@ -90,7 +95,6 @@ const productCollection = {
           message: 'Product Has Been Successfully Added'
         })
       } catch (e) {
-        console.log(e)
         failedNotification({
           message: e
         })
@@ -98,6 +102,8 @@ const productCollection = {
     },
     async deleteProduct ({ commit }, productId) {
       try {
+        commit('setBlurEffect', true)
+        commit('setIsLoading', true)
         const { data } = await removeProduct(productId)
         commit('deleteProduct', data)
       } catch (e) {
@@ -105,8 +111,10 @@ const productCollection = {
           message: e.message
         })
       } finally {
+        commit('setIsLoading', false)
+        commit('setBlurEffect', false)
         succesNotification({
-          message: 'Product Has Been Deleted'
+          message: 'Delete Product Success'
         })
       }
     }
