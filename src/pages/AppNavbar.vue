@@ -14,11 +14,6 @@
             <i class="fas fa-user"></i>
           </router-link>
         </b-navbar-brand>
-        <a class="navbar-text mx-auto" href="#">
-          <b-nav-form>
-            <b-form-input size="md" class="mr-sm-2" type="text" placeholder="Search"/>
-          </b-nav-form>
-        </a>
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
           <b-nav-item to="/cart"><i class="fa fa-shopping-cart"></i> Cart ({{cartLength}})

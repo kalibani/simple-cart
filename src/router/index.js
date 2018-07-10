@@ -40,6 +40,10 @@ export default new Router({
           path: 'new',
           name: 'AdminProductNew',
           component: AdminProductNew
+        },
+        {
+          path: 'edit/:id',
+          component: AdminProductNew
         }
       ]
     }

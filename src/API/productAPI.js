@@ -54,7 +54,7 @@ export const removeProduct = productId => {
   return axios(config)
 }
 
-export const updateProduct = (payload) => {
+export const editProduct = payload => {
   const config = {
     url: `${baseURL}/products/${payload._id}`,
     method: 'put',

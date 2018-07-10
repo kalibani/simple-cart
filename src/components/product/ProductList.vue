@@ -2,13 +2,21 @@
   <div>
     <b-container fluid class="bv-example-row products">
       <b-container class="wrapper">
+        <a class="navbar-text mx-auto" href="#">
+          <b-form-input
+            size="md"
+            class="mr-sm-2"
+            type="text"
+            v-model="search"
+            placeholder="Search"/>
+        </a>
         <b-row
         class="justify-content-md-center"
         v-if="isLoading">
           <app-loader></app-loader>
         </b-row>
         <b-row v-else>
-          <b-col md="4" lg="3" sm="6" xs="12" v-for="product in products" :key="product._id">
+          <b-col md="4" lg="3" sm="6" xs="12" v-for="product in filterProducts" :key="product._id">
           <product-item :product="product"></product-item>
           </b-col>
         </b-row>
@@ -23,6 +31,11 @@ import { mapGetters, mapActions } from 'vuex'
 import ProductItem from '@/components/product/ProductItem'
 import AppLoader from '@/pages/AppLoader'
 export default {
+  data () {
+    return {
+      search: ''
+    }
+  },
   created () {
     this.getProducts()
   },
@@ -33,6 +46,12 @@ export default {
         ...item,
         price: FORMATTER_CURRENCY_IDR.format(item.price).replace(/^(\D+)/, '$1 ')
       }))
+    },
+    filterProducts () {
+      let self = this
+      return this.products.filter(product => product.name
+        .toLowerCase()
+        .indexOf(self.search.toLowerCase()) >= 0)
     }
   },
   components: {

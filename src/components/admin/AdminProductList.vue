@@ -9,8 +9,8 @@
       :fields="fields"
       :style="{ filter: filterStyle, zIndex: 0}"
       class="table">
-      <template slot="Edit" slot-scope="row">
-        <b-link to="/admin/new">
+      <template slot="Edit" slot-scope="data">
+        <b-link :to="'/admin/edit/'+data.item._id">
           <i class="far fa-edit"></i>
         </b-link>
       </template>

@@ -65,14 +65,25 @@
       </b-col>
     </b-row>
     <div class="btn-custom">
-      <b-button variant="outline-secondary" @click="addProduct(model)">Add Product</b-button>
+      <b-button
+        v-if="buttonShow"
+        variant="outline-secondary"
+        @click="addProduct(model)">
+        Add Product
+      </b-button>
+      <b-button
+        v-else
+        variant="outline-secondary"
+        @click="updateProduct(model)">
+        Update Product
+      </b-button>
     </div>
   </b-col>
 </template>
 
 <script>
 import { Money } from 'v-money'
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapMutations, mapGetters } from 'vuex'
 export default {
   data () {
     return {
@@ -86,23 +97,49 @@ export default {
         suffix: '',
         precision: 0,
         masked: false
-      }
+      },
+      buttonShow: true
     }
   },
   components: {
     Money
   },
   computed: {
-    ...mapGetters('productCollection', ['manufacturers'])
+    ...mapGetters('productCollection', [
+      'manufacturers',
+      'product'
+    ])
   },
   methods: {
     ...mapActions('productCollection', [
       'getManufacturers',
-      'addProduct'
-    ])
+      'getProductDetail',
+      'addProduct',
+      'updateProduct'
+    ]),
+    ...mapMutations('productCollection', ['setProduct']),
+    getData () {
+      const params = this.$route.params.id
+      if (params) {
+        this.buttonShow = false
+        this.getProductDetail(params)
+      } else {
+        this.buttonShow = true
+        const obj = {}
+        this.setProduct(obj)
+      }
+    }
+  },
+  watch: {
+    product (value) {
+      if (value) {
+        this.model = value
+      }
+    }
   },
   created () {
     this.getManufacturers()
+    this.getData()
   }
 }
 </script>

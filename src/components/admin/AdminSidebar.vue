@@ -3,11 +3,13 @@
     <b-row>
       <b-col lg="3" md="3" sm="12" xs="12">
         <b-list-group>
-          <b-list-group-item to="/admin">Product List</b-list-group-item>
-          <b-list-group-item to="/admin/new">New Product</b-list-group-item>
+          <b-list-group-item to="/admin">Product List
+          </b-list-group-item>
+          <b-list-group-item to="/admin/new">New Product
+          </b-list-group-item>
         </b-list-group>
       </b-col>
-      <router-view></router-view>
+      <router-view :key="$route.path"></router-view>
     </b-row>
   </b-container>
 </template>

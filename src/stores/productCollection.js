@@ -3,7 +3,8 @@ import {
   fetchProductDetail,
   fetchManufacturers,
   postProduct,
-  removeProduct } from '@/API/productAPI'
+  removeProduct,
+  editProduct } from '@/API/productAPI'
 import {
   succesNotification,
   failedNotification } from '@/utils/toasted'
@@ -42,6 +43,13 @@ const productCollection = {
     addProduct (state, payload) {
       state.products.push(payload)
     },
+    setUpdate (state, payload) {
+      const index = state.products
+        .findIndex(product => product._id === payload._id)
+      if (~index) {
+        state.products.splice(index, 1, payload)
+      }
+    },
     deleteProduct (state, productId) {
       const index = state.products
         .findIndex(product => product._id === productId)
@@ -66,7 +74,9 @@ const productCollection = {
         const { data } = await fetchProducts()
         commit('setProducts', data)
       } catch (e) {
-        console.log('error', e)
+        failedNotification({
+          message: 'Failed fetching data'
+        })
       } finally {
         commit('setIsLoading', false)
       }
@@ -115,6 +125,22 @@ const productCollection = {
         commit('setBlurEffect', false)
         succesNotification({
           message: 'Delete Product Success'
+        })
+      }
+    },
+    async updateProduct ({ commit }, product) {
+      try {
+        // commit('setBlurEffect', true)
+        // commit('setIsLoading', true)
+        const { data } = await editProduct(product)
+        commit('setUpdate', data)
+      } catch (e) {
+        failedNotification({
+          message: e.message
+        })
+      } finally {
+        succesNotification({
+          message: 'Successfully Update Product'
         })
       }
     }
