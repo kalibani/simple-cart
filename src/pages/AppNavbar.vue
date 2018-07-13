@@ -14,6 +14,17 @@
             <i class="fas fa-user"></i>
           </router-link>
         </b-navbar-brand>
+        <b-nav-form>
+          <a class="navbar-text mx-auto" href="#">
+            <b-form-input
+              size="md"
+              class="mr-sm-2"
+              type="text"
+              v-model="q"
+              @input="emitEvent"
+              placeholder="Search"/>
+          </a>
+        </b-nav-form>
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
           <b-nav-item to="/cart"><i class="fa fa-shopping-cart"></i> Cart ({{cartLength}})
@@ -26,11 +37,22 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import bus from '@/utils/bus'
 export default {
+  data () {
+    return {
+      q: ''
+    }
+  },
   computed: {
     ...mapGetters('productCollection', ['cart']),
     cartLength () {
       return this.cart.length
+    }
+  },
+  methods: {
+    emitEvent (event) {
+      bus.$emit('emitted', event)
     }
   }
 }
@@ -39,6 +61,7 @@ export default {
 <style scoped>
 a {
   color: rgba(0, 0, 0, 0.5);
+  text-decoration: none;
 }
 
 .bg-light {
